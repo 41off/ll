@@ -1,0 +1,1866 @@
+<html>
+<head>
+    <title>LL Video Player</title>
+    
+<meta  name="viewport" content="width=device-width, initial-scale=1"/>
+ <link rel='icon' href='favicon.ico' type='image/x-icon'/ >
+
+<body>
+
+<link rel="stylesheet" type="text/css" href="main.css" />
+
+<style type="text/css" media="screen">
+
+body {
+ background: transparent;
+ /*background-image:url('224830242-black-and-blue-abstract-wallpaper.jpg')*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; 
+    background-size: 100% 100%;
+    -khtml-background-size: 100%;
+    color: white
+}
+
+@keyframes fadein {
+    from { opacity: 0; transition: 2s; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; transition: 2s; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; transition: 2s; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; transition: 2s; }
+    to   { opacity:1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+   from { opacity: 0; transition: 2s; }
+    to  { opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { transition: 5s; opacity: 0;}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeout {
+    from { opacity: 1; }
+    to   { transition: 5s; opacity: 0;}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeout {
+    from { opacity: 1; }
+    to   { transition: 5s; opacity: 0;}
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeout {
+    from { opacity: 1; }
+    to   { transition: 5s; opacity: 0;}
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeout {
+   from { opacity: 1;  }
+    to  { transition: 5s; opacity: 0; }
+}
+
+.timer {
+    position:absolute;
+    border:2px #666666 solid;
+    border-radius: 8px;
+    background-color: black;
+    line-height:16px;
+    font-size:100%;
+    font-family:"Verdana";
+    text-align:left;    
+    height: 3%;
+    width:5%;    
+    padding-top: 12px;
+    padding-left: 5px;
+    padding-right:0px;
+    margin-top: 8px;
+    display: block;
+    min-width: 100px;
+    left:25px;    
+    bottom: 14%;
+}
+
+.timer:hover {
+    border:2px red solid;
+    border-radius: 8px;
+    background-color: #555555; 
+    
+}
+.timerbar {
+    position: absolute;
+    display: block;
+    left: 11%;
+    right: 11%;
+    bottom: 7%;
+    height: 38px;
+    width:78%;
+    opacity: .25;
+    transition: opacity 30s;
+    background-color: transparent;
+    border: 2px;
+    border-color: transparent;
+    border-radius: 8px;
+    border-style: solid
+-webkit-animation: fadeout 15s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadeout 15s; /* Firefox < 16 */
+        -ms-animation: fadeout 15s; /* Internet Explorer */
+         -o-animation: fadeout 15s; /* Opera < 12.1 */
+            animation: fadeout 15s  
+  
+-webkit-animation: fadein 15s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 15s; /* Firefox < 16 */
+        -ms-animation: fadein 15s; /* Internet Explorer */
+         -o-animation: fadein 15s; /* Opera < 12.1 */
+            animation: fadein 15s;
+}
+
+.timerbar:hover {
+    background-color: #a8a9ad;
+    border-color: white;
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+.timercontrol {
+    position:absolute;
+    background-color: black;
+    border-radius: 12px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 100%;
+    color: white;
+    opacity: 1;
+    transition: opacity 3s;
+    border: 2px solid silver;
+    left: 1%;
+    right: 1%;
+    padding-top: 0px;
+    padding-left: 0px;
+    margin-bottom: 2px;
+    top: 40px
+}
+
+.timercontrol:hover {
+ background-color: #C0C0C0;
+ border: 5px pink;
+ border-style: dashed;
+ color: black;
+}
+
+.timerbutton {
+    text-align: center;
+    text-decoration: none;
+    font-size: 90%;
+    line-height:2px;
+    margin: 0px 0px;
+    margin-top: 4px;
+    padding-top:1px;
+    padding-bottom:1px;
+    padding-left:3px;
+    padding-right:3px;
+    width: 65px; 
+    height: 30px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 4px;
+}
+
+.timerbutton1 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+    width: 55px;
+}
+
+.timerbutton1:hover {
+    border-color: lime;
+    background-color: #ff0000;
+    color: white;
+}
+
+.timerbutton1 .tb1text {
+  visibility: hidden;
+  width: 180px;
+  height:85px;
+  background-color: black;
+  color: #fff;
+  text-decoration:blink;
+  font-weight:normal;
+  text-align: center;
+  border-width:2px;
+  border-style:inset;
+  border-color:silver;
+  border-radius: 6px;
+  display:block;
+  line-height: 125%;
+  left: 60%;
+  top: 110%;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.timerbutton1:hover .tb1text {
+  visibility: visible;
+}
+
+#negative2 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+}
+
+#negative2:hover {
+    border-color: lime;
+    background-color: #ff0000;
+    color: white;
+}
+
+#timerbutt1_8 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+}
+
+#timerbutt1_8:hover {
+    border-color: lime;
+    background-color: #008CBA;
+    color: white;
+}
+
+#timerbutt1_16 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+}
+
+#timerbutt1_16:hover {
+    border-color: lime;
+    background-color: #008CBA;
+    color: white;
+}
+
+.timerbutton .tbtext {
+  visibility: hidden;
+  width: 170px;
+  height:50px;
+  background-color: black;
+  border-color: silver;
+  color: white;
+  text-decoration:blink;
+  font-weight:normal;
+  text-align: center;
+  margin-left:5px;
+  display: inline-flex;
+  align-items: center;
+  border-width:2px;
+  border-style:inset;
+  border-radius: 6px;
+  line-height: 125%;
+  left: 40%;
+  top: 110%;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.timerbutton:hover .tbtext {
+  visibility: visible;
+}
+
+#timerbuttonreset {
+    width: 70px;
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+}
+
+#timerbuttonreset:hover {
+    border-color: lime;
+    background-color: #008CBA;
+    color: white;
+}
+
+.timerbutton3 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+    width: 50px; height: 30px;
+}
+
+.timerbutton3:hover {
+    border-color: lime;
+    background-color: #f44336;
+    color: white;
+}
+
+.timerbutton4 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+}
+
+.timerbutton4:hover {
+    border-color: lime;
+    background-color: #e7e7e7; 
+    color: gray
+}
+
+#speed4x {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+    width: 55px;
+}
+
+#speed4x:hover {
+    border-color: lime;
+    background-color: #e7e7e7; 
+    color: gray
+}
+
+#speed16x {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+    width: 55px;
+}
+
+#speed16x:hover {
+    border-color: lime;
+    background-color: #e7e7e7; 
+    color: gray
+}
+
+#timerbutton5 {
+    background-color: transparent;
+    font-weight: normal;
+    color: white; 
+    border-color: transparent;
+    border-radius: 10px;
+    border-style:double;
+    width: 100px;
+}
+
+#timerbutton5:hover {
+    border-color: lime;
+    background-color: blue; 
+    color: white;
+}
+
+.timerbutton6 {
+    background-color: black; 
+    color: white;
+    border-color: lime;
+    border-radius: 10px;
+    border-style:double;
+    width: 45px;
+    Margin: auto;
+}
+
+.timerbutton6:hover {
+    border-color: blue;
+    background-color: white; 
+    color: red;
+}
+  
+#stage{background:black;
+  width:100%;
+  height:100%;
+  position:absolute;
+  overflow:hidden;
+  margin:0;
+  border: 4px;
+  border-color:#0066CD;
+  border-style:solid;
+  border-radius: 10x;
+}
+
+#stage span{font-size:20px;color:#666;display:block;padding:2em;}
+
+#video{
+  position: absolute;
+  border: 4px;
+  border-color:gold;
+  border-style:solid;
+  border-radius: 4px;
+  width: 99.25%;
+  height: 99%;
+  padding-bottom: 0px;
+  margin-right:0.0%;
+  margin-top: 0%;
+}
+
+.playlist {
+    display:inline-block;
+    position:absolute;
+    right: 0.5%;
+    padding-top: 0px;
+    padding-bottom:0px;
+    padding-left:3px;
+    background-color: transparent;
+    border: 3px;
+    border-color: silver;
+    border-radius: 10px;
+    border-style: double;
+    height:500px;
+    width:100px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 100%;
+    line-height:22px;
+    color: white;
+    opacity: .05;
+    transition: opacity 10s;
+    top: 20%;
+    /*top: 35% */
+
+-webkit-animation: fadeout 15s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadeout 15s; /* Firefox < 16 */
+        -ms-animation: fadeout 15s; /* Internet Explorer */
+         -o-animation: fadeout 15s; /* Opera < 12.1 */
+            animation: fadeout 15s  
+  
+-webkit-animation: fadein 15s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 15s; /* Firefox < 16 */
+        -ms-animation: fadein 15s; /* Internet Explorer */
+         -o-animation: fadein 15s; /* Opera < 12.1 */
+            animation: fadein 15s;
+}
+
+.playlist:hover {
+   background-color: #C0C0C0;
+   border-color: lime;
+   opacity: 1;
+   color: red;
+   text-decoration:blink;
+   text-decoration:underline;
+   transition: opacity 2s;
+}
+
+.playlistbutton {
+    text-align: left;
+    background-color: transparent;
+    font-size: 100%;
+    margin-left: 5%; 
+    padding-top:1%;
+    padding-bottom:1%;
+    padding-left:1%;
+    width: 98%; 
+    height: 6.5%;
+    cursor: pointer;
+    color:white;
+    border-color:transparent;
+    border-width: 0px;
+}
+
+.playlistbutton:hover {
+    color:blue;
+    text-decoration:underline 
+}
+
+.playlistbutton:focus-within {
+  color: black;
+  font-weight:normal;
+  text-decoration:underline;
+}
+
+.playlistbutton .plbtext {
+  visibility: hidden;
+  width: 180px;
+  height:50px;
+  background-color: black;
+  border-color: silver;
+  color: white;
+  text-decoration:blink;
+  font-weight:bold;
+  text-align: center;
+  margin-left:5px;
+  display: inline-flex;
+  align-items: center;
+  border-width:2px;
+  border-style:inset;
+  border-radius: 6px;
+  line-height: 125%;
+  right: 20%;
+  top: 101%;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.playlistbutton:hover .plbtext, .playlistbutton:focus .plbtext, .playlistbutton:focus-within .plbtext {
+  visibility: visible;
+}
+
+.controls{
+    position:absolute;
+    text-align:center;
+    left: 25px;
+    padding-top: 0px;
+    padding-bottom:3px;
+    padding-left: 2px;
+    background-color: transparent;
+    border: 3px;
+    border-color: lime;
+    border-radius: 12px;
+    border-style: double;
+    height:320px;
+    width: 100px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 18px;
+    color: white;
+    opacity: .15;
+    transition: opacity 10s;
+    bottom: 100px;
+    top: 20%;
+-webkit-animation: fadeout 15s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadeout 15s; /* Firefox < 16 */
+        -ms-animation: fadeout 15s; /* Internet Explorer */
+         -o-animation: fadeout 15s; /* Opera < 12.1 */
+            animation: fadeout 15s  
+  
+-webkit-animation: fadein 15s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 15s; /* Firefox < 16 */
+        -ms-animation: fadein 15s; /* Internet Explorer */
+         -o-animation: fadein 15s; /* Opera < 12.1 */
+            animation: fadein 15s;
+}
+
+.controls:hover {
+ background-color: #C0C0C0;
+ border-color: lime;
+ opacity: 1;
+ color: black;
+ transition: opacity 2s;
+}
+
+#modal {
+    visibility: hidden;
+   
+}
+
+#modtext{
+    visibility: visible;
+    position: absolute;
+    border:2px transparent solid;
+    border-radius: 10px;
+    background-color: transparent;
+    font-size:100%;
+    font-family:"Verdana";
+    color:white;
+    text-align:center;
+    text-decoration:blink;
+    display: block;
+    align-items: center;    
+    right: 15px;    
+    height: 4%;
+    width: 7%;    
+    padding-top: 0px;
+    padding-left: 2px;
+    padding-bottom: 0px;    
+    min-width: 150px;       
+    bottom: 15%;
+}
+
+#modtext:hover {
+    color:lime;
+    background-color: transparent;
+    text-decoration:underline yellow;
+
+}
+
+#modtext:focus {
+  color: black;
+  font-weight:bold;
+  text-decoration:underline;
+}
+
+.zoomin {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:1%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.zoomin:hover {
+    border-color: gold;
+    background-color:  lime; 
+    color: black
+}
+
+.zoomout {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.zoomout:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.left {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+;
+}
+
+.left:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.right {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.right:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.up {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.up:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.down {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.down:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.rotateleft {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.rotateleft:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.rotateright {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight:bolder;
+    padding-bottom:2%;
+    margin: 5% 5%;
+    width: 35%; 
+    height: 15%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%
+}
+
+.rotateright:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+.reset {
+    background-color: black; 
+    color: white;
+    border-color:  aqua;
+    border-radius: 8px;
+    border-style:double;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    line-height:1%;
+    margin: 5% 5%;
+    padding-top:5%;
+    padding-bottom:5%;
+    width: 80%; 
+    height: 12%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2%;
+}
+
+.reset:hover {
+    border-color: gold;
+    background-color: lime; 
+    color: black
+}
+
+/*
+.active a{
+      color :red;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      font-size: 16px;
+}
+*/
+
+.closebtn2 {
+    margin-right:3px;
+    color: red;
+    font-weight: bold;
+    float: right;
+    font-size: 18px;
+    line-height: 18px;
+    cursor: pointer;
+    transition: 5s;
+}
+
+.closebtn2:hover {
+    color: yellow;
+}
+
+ul li{float: center;
+      width: 100%;  /*helps to determine number of columns, for instance 33.3% displays 3 columns*/
+}
+
+ul{list-style-type: disc; color:red
+}
+ li a:link {font-size: 14px; color:#eeeedd; font-weight:bold; background:transparent; padding:2px; display:block; font-family: "Arial Narrow";}
+ 
+ li a:active {color:red; font-family:"Arial Narrow";}
+ 
+ li a:hover {color:blue; font-family: "Arial Narrow";
+            background:transparent; text-decoration:underline;}
+ 
+ li a:visited {color:green; font-family: "Arial Narrow";
+            background:transparent; text-decoration:underline;}
+            
+</style>
+</head>
+
+<body onload="onload();">
+
+   <div id="stage">
+  
+             <video id="video" controls loop muted
+                     onclick="this.paused? ClickPause():ClickStart(); this.paused? timer.start(10):timer.stop(0)" onended="onVideoEnded();">
+                    <source type="video/mp4">
+                    <source type="video/ogg">
+                    <source type="video/ts">
+                    <source type="video/mkv">
+                    <source type='video/webm; codecs="vp8, vorbis"'>
+               </video>
+               
+           </div>
+      
+
+         <div class="timerbar" style="text-align:center">
+           <span class="closebtn2">&#11097;</span>
+            <button class="timerbutton" id="timerbuttonreset" onClick="multiReset()">&#x21F1;Reset</button> 
+            <button id="timerbutton5" class="timerbutton" onClick="multiStart()" value="Play">Play/Pause<span class="tbtext">This Video Player seems to function better with Chrome browser.</span></button>
+            <button class="timerbutton" id="timerbutt1_8" onClick="multiSlow()" value="+1/8X">+1/8X<span class="tbtext">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click twice to initiate.</span></button>
+            <button class="timerbutton" id="timerbutt1_16" onClick="multiSuperSlow()" value="+1/16x">+1/16X</button> 
+            <button class="timerbutton timerbutton1" id="negative2">-1/8X<span class="tb1text">Click blue "Pause" button to the left first. Click here for 20" rewind loop, wait for completion! Then re-click or choose other player button.</span></button>
+            <button class="timerbutton timerbutton1" id="negative" value="-1X">-1X<span class="tb1text">Click blue "Pause" button to the left first. Click here for 20" rewind loop, wait for completion! Then re-click or choose other player button.</span></button > 
+            <button class="timerbutton" id="speed4x" onClick="multiFwd()" value="4X">+4X</button>
+            <button class="timerbutton" id="speed16x" onClick="multiSupFwd()" value="16X">+16X</button>                       
+            <button class="timerbutton timerbutton1" id="negative3">-4X<span class="tb1text">Click blue "Pause" button to the left first. Click here for 20" rewind loop, wait for completion! Then re-click or choose other player button.</span></button>
+            <button class="timerbutton" id="timerbuttonreset" onclick="on0()">Repeat</button> 
+            <button class="timerbutton timerbutton3" onClick="onVideoNext()">Next</button>
+            <button class="timerbutton timerbutton3" onClick="onVideoBack()">Prior</button>
+            <button class="timerbutton timerbutton6" href="#" onclick='window.open("https://41off.github.io/ll/");return false;'>[\+/]<span class="tbtext">&nbsp;&nbsp;Click to open full seperate window.</span></button>
+          </div> 
+               
+         <div class="timer">
+             <span class="closebtn2">&#11097;</span>
+              <span class="minute">00</span>:<span class="second">00</span>.<span class="milli">00</span>
+           </div>
+   
+        <div class="controls"><span class="closebtn2">&#11097;</span> 
+          </div> 
+              
+      <div id="modal"><span class="closebtn2">&#11097;</span> 
+          </div> 
+             
+     <div class="playlist" style="text-align:left">
+      <span class="closebtn2">&#11097;</span>
+          <center>Playlist<br>Click &#x21A1; Twice<br></center>
+            <left>
+               <button class="playlistbutton" onclick="on0()"><li>Latest</li></button>
+               <button class="playlistbutton" onclick="on1()"><li>Clip 2</li></button>
+               <button class="playlistbutton" onclick="on2()"><li>Clip 3</li></button>
+               <button class="playlistbutton" onclick="on3()"><li>Clip 4</li></button>
+               <button class="playlistbutton" onclick="on4()"><li>Clip 5</li></button>
+               <button class="playlistbutton" onclick="on5()"><li>Clip 6</li></button>
+               <button class="playlistbutton" onclick="on6()"><li>Clip 7</li></button>
+               <button class="playlistbutton" onclick="on7()"><li>Clip 8</li></button>
+               <button class="playlistbutton" onclick="on8()"><li>Clip 9</li></button>
+               <button class="playlistbutton" onclick="on9()"><li>Clip 10</li></button>
+               <button class="playlistbutton" onclick="on10()"><li>Clip 11</li></button>
+               <button class="playlistbutton" onclick="on11()"><li>Clip 12</li></button>
+               <button class="playlistbutton" href="#" onclick="parent.location='https://www.41off.com/media/members/ll'"><li>HOME</li><span class="plbtext">Click to open this page in Victory Lake.</span></button>
+           </left>
+           
+      
+                
+   </div>
+               
+<script>
+var close = document.getElementsByClassName('closebtn2');
+var i;
+for (i = 0; i < close.length; i++) {
+    close[i].onclick = function(){
+        var div = this.parentElement;
+        div.style.opacity = "0";
+        setTimeout(function(){ div.style.display = "none"; }, 1200);
+    }
+}
+</script>
+
+<script>
+(function(){
+/* predefine zoom and rotate */
+  var zoom = 1,
+      rotate = 0;
+/* Grab the necessary DOM elements */
+  var stage = document.getElementById('stage'),
+      v = document.getElementsByTagName('video')[0],
+      controls = document.getElementsByClassName('controls')[0];     
+
+/* Array of possible browser specific settings for transformation */
+  var properties = ['transform', 'WebkitTransform', 'MozTransform',
+                    'msTransform', 'OTransform'],
+      prop = properties[0];
+/* Iterators and stuff */    
+  var i,j,t;
+ 
+  
+/* Find out which CSS transform the browser supports */
+  for(i=0,j=properties.length;i<j;i++){
+    if(typeof stage.style[properties[i]] !== 'undefined'){
+      prop = properties[i];
+      break;
+    }
+  }
+/* Position video */
+  v.style.left = 0;
+  v.style.top = 0;
+/* If there is a controls element, add the player buttons */
+   if(controls){
+    controls.innerHTML =  '<span class="closebtn2">&#11097;</span>'+
+                          '<br><center>Zoom Controls</center>'+                         
+                          '<button class="zoomin">+</button>' +
+                          '<button class="zoomout">-</button>' +
+                          '<button class="left">⇠</button>' +
+                          '<button class="right">⇢</button>' +
+                          '<button class="up">⇡</button>' +
+                          '<button class="down">⇣</button>' +
+                          '<button class="rotateleft">&#x21bb;</button>' +
+                          '<button class="rotateright">&#x21ba;</button>' +
+                          '<button class="reset">RESET</button>';
+}
+      
+  
+
+/* If a button was clicked (uses event delegation)...*/
+  controls.addEventListener('click',function(e){
+    t = e.target;
+    if(t.nodeName.toLowerCase()==='button'){
+/* Check the class name of the button and act accordingly */    
+      switch(t.className){
+/* Increase zoom and set the transformation */
+        case 'zoomin':
+          zoom = zoom + 0.1;
+          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)';
+        break;
+/* Decrease zoom and set the transformation */
+        case 'zoomout':
+          zoom = zoom - 0.1;
+          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)';
+        break;
+/* Increase rotation and set the transformation */
+        case 'rotateleft':
+          rotate = rotate + 5;
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
+        break;
+/* Decrease rotation and set the transformation */
+        case 'rotateright':
+          rotate = rotate - 5;
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
+        break;
+/* Move video around by reading its left/top and altering it */
+        case 'left':
+          v.style.left = (parseInt(v.style.left,10) - 15) + 'px';
+        break;
+        case 'right':
+          v.style.left = (parseInt(v.style.left,10) + 15) + 'px';
+        break;
+        case 'up':
+          v.style.top = (parseInt(v.style.top,10) - 15) + 'px';
+        break;
+        case 'down':
+          v.style.top = (parseInt(v.style.top,10) + 15) + 'px';
+        break;
+/* Reset all to default */
+        case 'reset':
+          zoom = 1;
+          rotate = 0;
+          v.style.top = 0 + 'px';
+          v.style.left = 0 + 'px';
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
+        break;
+      }        
+      e.preventDefault();
+    }
+  },false);
+})();
+
+var close = document.getElementsByClassName('closebtn2');
+var i;
+for (i = 0; i < close.length; i++) {
+    close[i].onclick = function(){
+        var div = this.parentElement;
+        div.style.opacity = "0";
+        setTimeout(function(){ div.style.display = "none"; }, 1200);
+    }
+}
+
+</script>
+
+
+<script type="text/javascript" src="js/jquery-1.7.js"></script>
+<script type="text/javascript">
+
+  function ClickStart() {
+    timer.stop();
+    timer.mode(1);
+    video_player.play();
+    video.playbackRate = 1.0; 
+   }
+   
+  function ClickPause(){
+    timer.start(10);
+    video_player.pause();
+   }
+  function onPause(){
+    timer.stop();
+    video_player.pause();
+   }
+  
+  function on1X(){
+    timer.stop();
+    video_player.pause();
+    video.pause();
+    clearInterval(rewind);
+    video.playbackRate = 1.0;
+   }
+ 
+  function onFastFwd(){
+    video.playbackRate = 4.0;
+    video_player.play();
+   }
+   
+  function onSupFwd(){
+    video.playbackRate = 16.0;
+    video_player.play();
+   }
+   
+  function onSlow(){
+    video.playbackRate = 0.125;
+    video_player.play();
+   }
+   
+  function onSuperSlow(){
+    video.playbackRate = 0.0625;
+    video_player.play();
+   }
+   
+  function multiStop() {
+    timer.stop();
+    timer.reset(0000);
+    video_player.pause();
+    clearInterval(rewind);
+   }
+ 
+ 
+  function multiStart() {
+      var btn = document.getElementById("timerbutton5");
+      
+   /*   var w = window.open('','','width=300,height=30')
+      
+      setTimeout(function() {w.close();}, 5000)
+    */   
+        if (btn.value == "Play") {
+            /*w.document.write('Use this button before each click on rewind buttons ("-1/8X or -1X")');
+              w.focus();  */
+             btn.value = "Pause";
+             btn.innerHTML = "Play";
+             video_player.play();
+             
+                }
+         else {
+             btn.value = "Play";
+             btn.innerHTML = "Pause";
+             video_player.pause();
+              }
+              
+     if(video_player.paused){
+      
+      timer.start(10);
+      timer.mode(1);      
+      video_player.play();
+      video.playbackRate = 1.0;
+     } 
+       else {
+            timer.stop();
+            video_player.pause();
+            clearInterval(rewind);
+         }
+ }
+  function multiReset() {
+    timer.reset(0000)
+   }
+   
+   function multiFwd() {
+    var btn = document.getElementById("speed4x");
+        if (btn.value == "+4X") {
+             btn.value = "Pause";
+             btn.innerHTML = "+4X";
+             video_player.play();
+                }
+         else {
+             btn.value = "+4X";
+             btn.innerHTML = "Pause";
+             video_player.pause();
+                }
+     if(video_player.paused){
+      timer.start(2);
+      timer.mode(1);
+      video_player.play();
+      video.playbackRate = 4.0;
+      } 
+       else {
+            timer.stop();
+            video_player.pause();
+         }   
+  }
+   
+   function multiSupFwd() {
+    var btn = document.getElementById("speed16x");
+        if (btn.value == "+16X") {
+             btn.value = "Pause";
+             btn.innerHTML = "+16X";
+             video_player.play();
+                }
+         else {
+             btn.value = "+16X";
+             btn.innerHTML = "Pause";
+             video_player.pause();
+                }
+     if(video_player.paused){
+      timer.start(0.3125);
+      timer.mode(1);
+      video_player.play();
+      video.playbackRate = 16.0;
+      } 
+       else {
+            timer.stop();
+            video_player.pause();
+         }   
+   }
+/*   
+    function multiSlow() {
+    timer.start(80);
+    timer.mode(1);
+    video.pause();
+    clearInterval(intervalRewind);
+    onSlow();
+   }
+*/
+  
+   function multiSlow() {
+      var btn = document.getElementById("timerbutt1_8");
+        if (btn.value == "+1/8X") {
+             btn.value = "Pause";
+             btn.innerHTML = "+1/8X";
+             video_player.play();
+                }
+         else {
+             btn.value = "+1/8X";
+             btn.innerHTML = "Pause";
+             video_player.pause();
+                }
+     if(video_player.paused){
+      timer.start(80);
+      timer.mode(1);
+      video_player.play();
+      video.playbackRate = .125;
+      } 
+       else {
+            timer.stop();
+            video_player.pause();
+         }
+ }
+   function multiSuperSlow() {
+      var btn = document.getElementById("timerbutt1_16");
+        if (btn.value == "+1/16X") {
+             btn.value = "Pause";
+             btn.innerHTML = "+1/16X";
+             video_player.play();
+                }
+         else {
+             btn.value = "+1/16X";
+             btn.innerHTML = "Pause";
+             video_player.pause();
+                }
+     if(video_player.paused){
+      timer.start(160);
+      timer.mode(1);
+      video_player.play();
+      video.playbackRate = .0625;
+      } 
+       else {
+            timer.stop();
+            video_player.pause();
+         }
+ }
+/*   
+    function multiSuperSlow() {
+    timer.start(160);
+    timer.mode(1);
+    video.pause();
+    clearInterval(intervalRewind);
+    onSuperSlow();
+   }
+*/
+  
+   function multiRev() {
+    timer.start(80);
+    timer.mode(0);    
+   }
+   
+  
+        var video_directory = ['https://www.dropbox.com/s/8ewljagmapkv943/XRG-08-21-2021.mp4?raw=1',
+                              ];                      
+ 
+  
+        var video_index = 0;
+        var video_player = null;
+        var video = document.getElementById('video');  
+       
+                          
+      function onload(){
+            console.log("body loaded");
+            video_player = document.getElementById("video");
+            video_player.setAttribute("src", video_directory[video_index]);
+            video_player.volume = 0.2;
+            video_player.currentSrc();
+            video_player.currentTime();
+            timer.start(10)
+        }
+        
+       function onVideoEnded(){
+            console.log("video ended");
+            if(video_index < video_directory.length - 1){
+                video_index++;
+            }
+            else{
+                video_index = 1;
+            }
+            video_player.setAttribute("src", video_directory[video_index]);
+            video_player.play();
+        }
+        
+       function onVideoNext(){
+            console.log("video next");
+            if(video_index < video_directory.length - 1){
+                video_index++;
+            }
+            else{
+                video_index = 1;
+            }
+            video_player = document.getElementById("video");
+            video_player.setAttribute("src", video_directory[video_index]);
+            video_player.play();
+        }
+        
+       function onVideoBack(){
+            console.log("video back");
+            if(video_index < video_directory.length - 1){
+                video_index--;
+            }
+            else{
+                video_index--;
+            }
+            video_player = document.getElementById("video");
+            video_player.setAttribute("src", video_directory[video_index]);
+            video_player.play();
+        }
+        
+   //rewind below  
+$("#negative").click(function() { // button function for rewind
+    video_player.pause();
+     
+     rewind = setInterval(function() {
+               
+       if (video_player.currentTime == 0) {
+          clearInterval(rewind);
+          video_player.pause();
+          }
+          
+       else{
+           timer.start(10);
+           timer.mode(0);
+           video_player.currentTime += -.3;
+             }
+                },300);
+        
+      setTimeout(function() {
+        alert('20 second rewind loop DONE!. Click desired player button to resume, after "OK", to restart');
+        clearInterval(rewind);
+        timer.stop();
+        }, 20000);
+});
+$("#negative2").click(function() { // button function for rewind
+    video_player.pause();
+      
+     rewind = setInterval(function() {
+              
+       if (video_player.currentTime == 0) {
+          clearInterval(rewind);
+          video_player.pause();
+          
+          
+          }
+          
+       else{
+           timer.start(80);
+           timer.mode(0);
+           video_player.currentTime += -.05;
+             }
+                },400);
+           
+         
+     setTimeout(function() {
+               alert('2.5 second rewind loop DONE!. Click desired player button to resume, after "OK", to restart');
+               clearInterval(rewind);
+               timer.stop();
+               }, 20500);
+});
+$("#negative3").click(function() { // button function for rewind
+    video_player.pause();
+      
+    rewind = setInterval(function() {
+               
+       if (video_player.currentTime == 0) {
+          clearInterval(rewind);
+          video_player.pause();
+          }
+       else{
+           timer.start(2.5);
+           timer.mode(0);
+           video_player.currentTime += -1;
+             }
+                },250);
+           
+      setTimeout(function() {
+        alert('20 second rewind loop DONE!. Click desired player button to resume, after "OK", to restart');
+        clearInterval(rewind);
+        timer.stop();
+        }, 8000);
+});
+/*  
+$("#negative3").click(function() { // button function for rewind
+       intervalRewind = setInterval(function(){
+       timer.start(2.5);
+       timer.mode(0);
+       video.playbackRate = 4.0;
+       if(video.currentTime == 0){
+          clearInterval(intervalRewind);
+       }
+       else{
+           video.currentTime += -.0083;
+       }
+                },10);
+});
+*/
+            
+       function on0(){
+            console.log("0 ended");
+            video_index = 0;
+            video_player.setAttribute("src", video_directory[video_index]);
+                       
+        var btn = document.getElementById("modal");
+      
+            if (btn.value == "Latest") {
+              btn.value = "Latest";
+              btn.innerHTML = '<button id="modtext">Latest</button>';              
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Latest";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+          }
+        
+        function on1(){
+            console.log("1 ended");
+            video_index = 1;
+            video_player.setAttribute("src", video_directory[video_index]);
+           
+         var btn = document.getElementById("modal");
+              
+            if (btn.value == "Clip 2") {
+              btn.value = "Clip 2";
+              btn.innerHTML = '<button id="modtext">Clip 2</button>';             
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 2";
+              btn.innerHTML =  '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();              
+              }
+        }
+           
+          function on2(){
+            console.log("2 ended");
+            video_index = 2;
+            video_player.setAttribute("src", video_directory[video_index]);
+            
+          var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 3") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 3</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 3";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+        }
+                      
+          function on3(){
+            console.log("3 ended");
+            video_index = 3;
+            video_player.setAttribute("src", video_directory[video_index]);
+            
+           var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 4") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 4</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 4";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';              
+              timer.stop();
+              video_player.pause();
+              }
+        }
+        
+          function on4(){
+            console.log("4 ended");
+            video_index = 4;
+            video_player.setAttribute("src", video_directory[video_index]);
+                        
+           var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 5") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 5</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 5";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();              
+              }
+        }
+           
+         function on5(){
+            console.log("5 ended");
+            video_index = 5;            
+            video_player.setAttribute("src", video_directory[video_index]);
+                        
+          var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 6") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 6</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 6";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+        }
+        
+         function on6(){
+            console.log("6 ended");
+            video_index = 6;
+            video_player.setAttribute("src", video_directory[video_index]);
+                        
+          var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 7") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 7</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 7";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+        }
+         
+          function on7(){
+            console.log("7 ended");
+            video_index = 7;
+            video_player.setAttribute("src", video_directory[video_index]);
+                        
+           var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 8") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 8</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 8";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+        }
+        
+          function on8(){
+            console.log("8 ended");
+            video_index = 8;
+            video_player.setAttribute("src", video_directory[video_index]);
+            video_player.play();
+            
+           var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 9") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 9</button>';              
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 9";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';              
+              timer.stop();
+              video_player.pause();
+              }
+        }
+        
+          function on9(){
+           console.log("9 ended");
+           video_index = 9;
+           video_player.setAttribute("src", video_directory[video_index]);
+           video_player.play();
+           
+          var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 10") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 10</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 10";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+       }
+       
+          function on10(){
+           console.log("10 ended");
+           video_index = 10;
+           video_player.setAttribute("src", video_directory[video_index]);
+                      
+          var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 11") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 11</button>';
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 11";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+       }
+       
+          function on11(){
+            console.log("11 ended");
+             if(video_index = 10){
+                video_index++;
+           }
+            else{
+                video_index = 0;
+            }
+            video_player = document.getElementById("video");
+            video_player.setAttribute("src", video_directory[video_index]);
+            video_player.play();
+           
+           var btn = document.getElementById("modal");
+      
+            if (btn.value == "Clip 12") {
+              btn.value = "";
+              btn.innerHTML = '<button id="modtext">Clip 12</button>';              
+              timer.reset();
+              video_player.play();
+              timer.start(10);
+              timer.mode(1);
+              }
+            else {
+              btn.value = "Clip 12";
+              btn.innerHTML = '<button id="modtext">Click Twice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x21F1;</button>';
+              timer.stop();
+              video_player.pause();
+              }
+        }
+        
+</script>
+
+
+<script>
+function _timer(callback)
+{
+    var time = 0;     //  The default time of the timer
+    var mode = 1;     //    Mode: count up or count down
+    var status = 0;    //    Status: timer is running or stoped
+    var timer_id;    //    This is used by setInterval function
+    
+    // this will start the timer ex. start the timer with 1 second interval timer.start(1000) 
+    this.start = function(interval)
+    {
+        interval = (typeof(interval) !== 'undefined') ? interval : 0;
+ 
+        if(status == 0)
+        {
+            status = 1;
+            timer_id = setInterval(function()
+            {
+                switch(mode)
+                {
+                    default:
+                    if(time)
+                    {
+                        time--;
+                        generateTime();
+                        if(typeof(callback) === 'function') callback(time);
+                    }
+                    break;
+                    
+                    case 1:
+                    if(time < 86400)
+                    {
+                        time++;
+                        generateTime();
+                        if(typeof(callback) === 'function') callback(time);
+                    }
+                    break;
+                }
+            }, interval);
+        }
+    }
+    
+    //  Same as the name, this will stop or pause the timer ex. timer.stop()
+    this.stop =  function()
+    {
+        if(status == 1)
+        {
+            status = 0;
+            clearInterval(timer_id);
+        }
+    }
+    
+    // Reset the timer to zero or reset it to your own custom time ex. reset to zero second timer.reset(0)
+    this.reset =  function(sec)
+    {
+        sec = (typeof(sec) !== 'undefined') ? sec : 0;
+        time = sec;
+        generateTime(time);
+    }
+    
+    // Change the mode of the timer, count-up (1) or countdown (0)
+    this.mode = function(tmode)
+    {
+        mode = tmode;
+    }
+    
+    // This methode return the current value of the timer
+    this.getTime = function()
+    {
+        return time;
+    }
+    
+    // This methode return the current mode of the timer count-up (1) or countdown (0)
+    this.getMode = function()
+    {
+        return mode;
+    }
+    
+    // This methode return the status of the timer running (1) or stopped (1)
+    this.getStatus
+    {
+        return status;
+    }
+    
+    // This methode will render the time variable to hour:minute:second format
+    function generateTime()
+    {
+        var milli = time % 100;
+        var second = Math.floor(time / 100) % 60;
+        var minute = Math.floor(time / 6000) % 60;
+        var hour = Math.floor(time / 360000) % 24;
+        
+        milli = (milli < 10) ? '0'+milli : milli;
+        second = (second < 10) ? '0'+second : second;
+        minute = (minute < 10) ? '0'+minute : minute;
+        hour = (hour < 10) ? '0'+hour : hour;
+        
+        $('div.timer span.milli').html(milli);
+        $('div.timer span.second').html(second);
+        $('div.timer span.minute').html(minute);
+        $('div.timer span.hour').html(hour);
+    }
+}
+ 
+// example use
+var timer;
+ 
+$(document).ready(function(e) 
+{
+    timer = new _timer
+    (
+        function(time)
+        {
+            if(time == null)
+            {
+                timer.stop();
+                alert('Out The Gates!!!');
+            }
+        }
+    );
+    timer.reset(0);
+    timer.mode(0);
+});
+</script>
+
+</body>
+</html>
